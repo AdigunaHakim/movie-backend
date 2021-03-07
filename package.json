@@ -20,6 +20,7 @@
   "homepage": "https://github.com/AdigunaHakim/movie-backend#readme",
   "dependencies": {
     "express": "^4.17.1",
+    "mongodb": "^3.6.3",
     "morgan": "^1.10.0",
     "winston": "^3.3.3"
   },
