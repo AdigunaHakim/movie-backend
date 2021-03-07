@@ -1,7 +1,7 @@
 const { MongoClient } = require('mongodb');
 const logger = require('./logger');
 
-const _uri = 'mongodb+srv://adiguna_surya:hXBqJop9Zf3KSMzQ@movie-app.ts9sk.mongodb.net/sample_mflix?retryWrites=true&w=majority&ssl=true';
+const _uri = '';
 
 const dbConnection = (collection, callback) => {
     MongoClient.connect(_uri)
