@@ -15,9 +15,4 @@ const dbConnection = (collection, callback) => {
     });
 };
 
-dbConnection('movies', async (db) => {
-    const movie = await db.findOne();
-    console.log(movie);
-});
-
 module.exports = dbConnection;
