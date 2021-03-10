@@ -1,9 +1,9 @@
 const { Router } = require('express');
-const { getLogin } = require('../controller');
+const { getMovies } = require('../controller');
 
 const router = Router();
 
 router
-.get('/login', getLogin);
+.get('movies', getMovies);
 
 module.exports = router;
