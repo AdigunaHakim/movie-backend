@@ -11,24 +11,32 @@ const getMovies = (req, res, next) => {
 
     const offset = (page - 1) * limit;
 
-    database('movies', async (db) => {
-        const movies = await db.find({}).skip(offset).limit(limit).toArray();
-        res.json(movies);
-    });
+    try {
+        database('movies', async (db) => {
+            const movies = await db.find({}).skip(offset).limit(limit).toArray();
+            res.json(movies);
+        });
+    } catch(err){
+        res.status(500).send('Internal Server Error');
+    }
 };
 
 const getMovieById = (req, res, next) => {
-    const _id = new ObjectId(req.params.id);
-
-    database('movies', async (db) => {
-        const movie = await db.findOne({_id});
-
-        if(!movie) {
-            res.status(404).send('Data Not Found');
-        }
-
-        res.json(movie);
-    })
+    try {
+        const _id = new ObjectId(req.params.id);
+        
+        database('movies', async (db) => {
+            const movie = await db.findOne({_id});
+    
+            if(!movie) {
+                res.status(404).send('Data Not Found');
+            }
+    
+            res.json(movie);
+        });
+    } catch(err){
+        res.status(500).send('Internal Server Error');
+    }
 }
 
 module.exports = {
