@@ -8,7 +8,6 @@ module.exports = (app) => {
         }
 
         // error not found handling, when path not found on route
-        const error = createError(404);
-        res.status(error.statusCode).send(error.message);
-    })
+        next(createError(404));
+    });
 }

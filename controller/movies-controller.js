@@ -1,12 +1,13 @@
 const { database } = require('../config');
 const { ObjectId } = require('bson');
+const createError = require('http-errors');
 
 const getMovies = (req, res, next) => {
     const page = parseInt(req.query.page);
     const limit = parseInt(req.query.limit);
 
     if(isNaN(page) || isNaN(limit)){
-        res.status(400).send('Bad Request');
+        next(createError(400));
     }
 
     const offset = (page - 1) * limit;
@@ -17,7 +18,7 @@ const getMovies = (req, res, next) => {
             res.json(movies);
         });
     } catch(err){
-        res.status(500).send('Internal Server Error');
+        next(createError(500));
     }
 };
 
@@ -29,13 +30,13 @@ const getMovieById = (req, res, next) => {
             const movie = await db.findOne({_id});
     
             if(!movie) {
-                res.status(404).send('Data Not Found');
+                next(createError(404));
             }
     
             res.json(movie);
         });
     } catch(err){
-        res.status(500).send('Internal Server Error');
+        next(createError(500));
     }
 }
 

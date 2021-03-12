@@ -17,4 +17,15 @@ middlewares(app);
 // routing
 routes(app);
 
+// global error handling
+app.use((err, req, res, next) => {
+    logger.error(err.message);
+
+    res.status(err.statusCode);
+    res.json({
+        status: 'error',
+        message: err.message
+    });
+});
+
 module.exports = app;
