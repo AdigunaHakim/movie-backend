@@ -1,14 +1,22 @@
 const { database } = require('../config');
 const { userValidator } = require('../validator');
+const { hashSync } = require('bcryptjs')
 
 class User {
     constructor(userData){
         this.userData = {...userData}
     };
 
-    save(){
-        database('users', db =>{
-            db.insertOne(this.userData);
+    save(cb){
+        database('users', async (db) =>{
+            try {
+                const hashPassword = hashSync(this.userData['password'], 12);
+                this.userData['password'] = hashPassword;
+                await db.insertOne(this.userData);
+                cb();
+            } catch(err){
+                cb(err);
+            }
         });
     }
 
@@ -24,12 +32,12 @@ class User {
                         });
                     } else if(this.userData['username'] === user.username){
                         resolve({
-                            check: false,
+                            check: true,
                             message: 'this username already in use'
                         });
                     } else if(this.userData['email'] === user.email){
                         resolve({
-                            check: false,
+                            check: true,
                             message: 'this email already in use'
                         });
                     }
