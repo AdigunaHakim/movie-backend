@@ -7,7 +7,7 @@ const getMovies = (req, res, next) => {
     const limit = parseInt(req.query.limit);
 
     if(isNaN(page) || isNaN(limit)){
-        next(createError(400));
+        return next(createError(400));
     }
 
     const offset = (page - 1) * limit;
@@ -18,7 +18,7 @@ const getMovies = (req, res, next) => {
             res.json(movies);
         });
     } catch(err){
-        next(createError(500));
+        return next(createError(500));
     }
 };
 
@@ -36,7 +36,7 @@ const getMovieById = (req, res, next) => {
             res.json(movie);
         });
     } catch(err){
-        next(createError(500));
+        return next(createError(500));
     }
 }
 
