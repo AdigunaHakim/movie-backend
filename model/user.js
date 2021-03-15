@@ -1,6 +1,6 @@
 const { database } = require('../config');
-const { userValidator } = require('../validator');
-const { hashSync } = require('bcryptjs')
+const { userValidator, loginValidator } = require('../validator');
+const { hashSync, compareSync } = require('bcryptjs')
 
 class User {
     constructor(userData){
@@ -50,6 +50,41 @@ class User {
 
     static validate(userData){
         return userValidator.validate(userData);
+    }
+
+    static login(userData){
+        return new Promise((resolve, reject) => {
+
+            // validate
+            const validate = loginValidator.validate(userData);
+            if(validate.error){
+                const error = new Error(validate.error.message);
+                error.statusCode = 400;
+                return resolve(error);
+            }
+
+            database('users', async (db) => {
+                try{
+                    const user = await db.findOne({'$or': [{username: userData['username']},{email: userData['username']}]});
+
+                    if(!user){
+                        const error = new Error('username or email not registered');
+                        error.statusCode = 404;
+                        return resolve(error);
+                    }
+
+                    if(!compareSync(userData['password'], user.password)){
+                        const error = new Error('invalid password');
+                        error.statusCode = 400;
+                        return resolve(error);
+                    }
+
+                    resolve(user);
+                } catch(err){
+                    reject(err);
+                }
+            });
+        });
     }
 }
 
