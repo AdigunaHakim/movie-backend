@@ -1,7 +1,6 @@
 # movie-backend
 
-This simple rest api build with node.js and mongo as database. Include feature :
-
+this is simple REST API apps build with node.js and mongo as database, include feature :
 - GET/POST Request (movies, comment etc)
 - Signup 
 - Login
@@ -10,8 +9,7 @@ This simple rest api build with node.js and mongo as database. Include feature :
 ##### requirement :
 
 install node js :
-https://nodejs.org/en/download/
-
+- https://nodejs.org/en/download/
 - create your secret key at root named with `private.key`
 - run command `npm install` then `npm start`
 
