@@ -10,7 +10,7 @@ class Comment {
 
     save(){
         return new Promise((resolve, reject) => {
-            database('comment', async (db) =>{
+            database('comments', async (db) =>{
                 try {
                     await db.insertOne(this.data);
                     resolve();
