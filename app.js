@@ -1,5 +1,5 @@
 const express = require('express');
-const middlewares = require('./middlewares');
+const { middleware, auth } = require('./middlewares');
 const routes = require('./routes');
 const logger = require('./config/logger');
 
@@ -12,7 +12,7 @@ process.on('unhandledRejection', reason => {
 });
 
 // middleware
-middlewares(app);
+middleware(app);
 
 // routing
 routes(app);
