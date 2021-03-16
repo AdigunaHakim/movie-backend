@@ -15,7 +15,7 @@ const postLogin = (req, res, next) => {
         }
 
         const secret = readFileSync('./private.key');
-        const token = jwt.sign({_id: result._id, username: result.username}, secret);
+        const token = jwt.sign({_id: result._id, username: result.username}, secret, {expiresIn: '6h'});
 
         res.json({token});
     })
