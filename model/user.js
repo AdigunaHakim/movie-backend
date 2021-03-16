@@ -65,7 +65,7 @@ class User {
 
             database('users', async (db) => {
                 try{
-                    const user = await db.findOne({'$or': [{username: userData['username']},{email: userData['username']}]});
+                    const user = await db.findOne({'$or': [{username: userData['username']},{email: userData['username']}]}, {projection: {username: 1, password: 1}});
 
                     if(!user){
                         const error = new Error('username or email not registered');

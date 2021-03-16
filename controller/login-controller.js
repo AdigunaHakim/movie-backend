@@ -1,5 +1,7 @@
 const { User } = require('../model');
 const createError = require('http-errors');
+const jwt = require('jsonwebtoken');
+const { readFileSync } = require('fs');
 
 const getLogin = (req, res, next) => {
     res.send('welcome to login page');
@@ -12,7 +14,10 @@ const postLogin = (req, res, next) => {
             next(result);
         }
 
-        res.json(result);
+        const secret = readFileSync('./private.key');
+        const token = jwt.sign({id: result._id, username: result.username}, secret);
+
+        res.json(token);
     })
     .catch(err => {
         next(createError(500));

@@ -1,10 +1,19 @@
 # movie-backend
+
+This simple rest api build with node.js and mongo as database. Include feature :
+
+- GET/POST Request (movies, comment etc)
+- Signup 
+- Login
+- JWT Authorization 
+
 ##### requirement :
 
 install node js :
 https://nodejs.org/en/download/
 
-run command `npm install` then `npm start`
+- create your secret key at root named with `private.key`
+- run command `npm install` then `npm start`
 
 ##### npm command :
 - `npm init` to create initial project
