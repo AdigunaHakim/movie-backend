@@ -1,7 +1,7 @@
 const { getLogin, postLogin } = require('./login-controller');
 const { postSignUp } = require('./signup-controller');
 const { getMovies, getMovieById } = require('./movies-controller');
-const { postComment } = require('./comment-controller');
+const { postComment, updateComment, deleteComment } = require('./comment-controller');
 
 module.exports = {
     getLogin,
@@ -9,5 +9,7 @@ module.exports = {
     postSignUp,
     getMovies,
     getMovieById,
-    postComment
+    postComment,
+    updateComment,
+    deleteComment
 }

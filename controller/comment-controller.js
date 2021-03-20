@@ -22,7 +22,7 @@ const postComment = (req, res, next) => {
     
     comment.save()
     .then(() => {
-        res.json({
+        res.status(201).json({
             message: 'comment has been successfully created'
         });
     })
@@ -31,6 +31,44 @@ const postComment = (req, res, next) => {
     });
 }
 
+const updateComment = (req, res, next) => {
+    const commentId = req.params.commentId;
+
+    if(!ObjectId.isValid(commentId)){
+        return next(createError(400));
+    }
+
+    Comment.update(new ObjectId(commentId), req.body['text'])
+    .then(() => {
+        res.json({
+            message: 'comment successfully updated'
+        });
+    })
+    .catch(err => {
+        next(createError(500));
+    });
+}
+
+const deleteComment = (req, res, next) => {
+    const commentId = req.params.commentId;
+
+    if(!ObjectId.isValid(commentId)){
+        return next(createError(400));
+    }
+
+    Comment.delete(new ObjectId(commentId))
+    .then(() => {
+        res.json({
+            message: 'comment successfully deleted'
+        });
+    })
+    .catch(err => {
+        next(createError(500));
+    });
+}
+
 module.exports = {
-    postComment
+    postComment,
+    updateComment,
+    deleteComment
 }

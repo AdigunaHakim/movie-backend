@@ -1,4 +1,5 @@
 const { database } = require('../config');
+const { data } = require('../config/logger');
 const { commentValidator } = require('../validator');
 
 class Comment {
@@ -19,6 +20,32 @@ class Comment {
                 }
             });
         });
+    }
+
+    static update(commentId, text) {
+        return new Promise((resolve, reject) => {
+            database('comments', async (db) => {
+                try {
+                    await db.updateOne({_id: commentId}, {'$set': {text, modifiedDate: new Date()}});
+                    resolve();
+                } catch(err){
+                    reject(err);
+                }
+            });
+        })
+    }
+
+    static delete(commentId) {
+        return new Promise((resolve, reject) => {
+            database('comments', async (db) => {
+                try {
+                    await db.deleteOne({_id: commentId});
+                    resolve();
+                } catch(err){
+                    reject(err);
+                }
+            });
+        })
     }
 
     static validate(data){
