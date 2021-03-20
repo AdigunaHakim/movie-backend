@@ -6,7 +6,7 @@ const { auth } = require('../middlewares');
 
 module.exports = (app) => {
     app.use('/auth', authRouter);
-    app.use(auth, moviesRouter);
+    app.use(moviesRouter);
     app.use(auth, commentRouter);
     homeRouter(app);
 };
