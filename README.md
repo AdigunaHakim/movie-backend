@@ -9,7 +9,7 @@ this is simple REST API apps build with node.js and mongo as database, include f
 ##### requirement :
 
 - install node.js https://nodejs.org/en/download/
-- create your secret key at root named with `private.key
+- create your secret key at root named with `private.key`
 - create your env file on `.env` contains `MONGO_URI` & `PORT`
 - run command `npm install` to install all dependency
 - run command `npm start` and enjoy :)
