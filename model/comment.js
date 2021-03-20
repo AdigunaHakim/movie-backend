@@ -1,21 +1,42 @@
 const { database } = require('../config');
-const { data } = require('../config/logger');
 const { commentValidator } = require('../validator');
 
 class Comment {
-    constructor(data){
+    constructor(data) {
         this.data = data;
         this.data.createdDate = new Date();
         this.data.modifiedDate = new Date();
     }
 
-    save(){
+    save() {
         return new Promise((resolve, reject) => {
             database('comments', async (db) =>{
                 try {
-                    await db.insertOne(this.data);
+                    const comment = await db.insertOne(this.data);
+                    this.data['id'] = comment.insertedId;
+                    await this.linkToMovie(this.data['id']);
                     resolve();
                 } catch(err) { 
+                    reject(err);
+                }
+            });
+        });
+    }
+
+    linkToMovie(commentId) {
+        return new Promise((resolve, reject) => {
+            database('movies', async(db) => {
+                try {
+                    await db.updateOne({_id:this.data['movieId']}, {
+                        '$push': {
+                             comments: {
+                                 '$each':[{_id: commentId, username: this.data['username'], text: this.data['text']}],
+                                 '$slice': -10 //to save only 10 latest data
+                             }
+                        }
+                    });
+                    resolve();
+                } catch(err){
                     reject(err);
                 }
             });
@@ -48,7 +69,7 @@ class Comment {
         })
     }
 
-    static validate(data){
+    static validate(data) {
         const validate = commentValidator.validate(data);
 
         if(validate.error){

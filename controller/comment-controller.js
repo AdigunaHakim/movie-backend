@@ -5,7 +5,7 @@ const { Comment } = require('../model');
 const postComment = (req, res, next) => {
     const movieId = req.params.movieId;
 
-    if(!ObjectId.isValid(movieId)){
+    if(!ObjectId.isValid(movieId)) {
         return next(createError(400));
     }
 
