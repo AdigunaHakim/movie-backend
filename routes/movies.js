@@ -1,5 +1,6 @@
 const { Router } = require('express');
 const { getMovies, getMovieById } = require('../controller');
+const { auth } = require('../middlewares');
 
 const router = Router();
 

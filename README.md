@@ -1,16 +1,24 @@
 # movie-backend
 
 this is simple REST API apps build with node.js and mongo as database, include feature :
-- GET/POST request (movies, comment etc)
-- signup 
-- login
+- CRUD service
+- integrate logger with morgan & winston library
 - user verification & authorization (with JSON Web Token)
 
-##### requirement :
+##### path :
+- **(POST)** auth/signup
+- **(POST)** auth/login
+- **(GET)** movies?page={page}&limit={limit}
+- **(GET)** movies/detail/:movieId
+- **(POST)** comment/createComment/:movieId
+- **(PUT)** comment/editComment/:commentId
+- **(DELETE)** comment/deleteComment/:commentId
+
+##### how to :
 
 - install node.js https://nodejs.org/en/download/
-- create your secret key at root named with `private.key`
-- create your env file on `.env` contains `MONGO_URI` & `PORT`
+- create your secret key at root directory named with `private.key`
+- create your env file on `.env` at root directory contains `MONGO_URI` & `PORT`
 - run command `npm install` to install all dependency
 - run command `npm start` and enjoy :)
 
